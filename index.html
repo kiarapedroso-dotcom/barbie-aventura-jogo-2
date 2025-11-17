@@ -5,38 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aventura da Barbie: Uma Jornada Mágica</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #ffcce6;
-            color: #333;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffcce6, #ff99cc);
+            color: #333;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            padding: 20px;
         }
         
         .container {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 30px;
             max-width: 800px;
-            width: 90%;
+            width: 100%;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: sparkle 10s linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes sparkle {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
         }
         
         h1 {
             color: #e91e63;
             margin-bottom: 20px;
             font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
         }
         
         p {
             font-size: 1.2rem;
             line-height: 1.6;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
         }
         
         .choices {
@@ -44,32 +74,60 @@
             flex-direction: column;
             gap: 15px;
             margin-top: 30px;
+            position: relative;
+            z-index: 1;
         }
         
         button {
-            background-color: #e91e63;
+            background: linear-gradient(to right, #e91e63, #ff4081);
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 50px;
             padding: 15px 25px;
             font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+            position: relative;
+            overflow: hidden;
         }
         
         button:hover {
-            background-color: #c2185b;
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
         }
         
-        .image-container {
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        button:hover::after {
+            left: 100%;
+        }
+        
+        .scene {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .animation-container {
+            height: 250px;
             margin: 20px 0;
-        }
-        
-        .image-container img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
         
         .hidden {
@@ -77,12 +135,458 @@
         }
         
         .restart-btn {
-            background-color: #9c27b0;
+            background: linear-gradient(to right, #9c27b0, #e91e63);
             margin-top: 20px;
         }
         
-        .restart-btn:hover {
-            background-color: #7b1fa2;
+        /* Animações específicas para cada cena */
+        
+        /* Cena de introdução - Casa da Barbie */
+        .barbie-house {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(135deg, #ff99cc, #ff66b2);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .barbie-house::before {
+            content: "";
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 60px;
+            background: #ff4081;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        
+        .barbie-house::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 30px;
+            width: 40px;
+            height: 60px;
+            background: #ffccff;
+            border: 2px solid #ff66b2;
+        }
+        
+        .window {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #b3e5fc;
+            border: 2px solid #ff66b2;
+            border-radius: 5px;
+        }
+        
+        .window:nth-child(1) {
+            top: 30px;
+            left: 40px;
+        }
+        
+        .window:nth-child(2) {
+            top: 30px;
+            right: 40px;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle 2s infinite alternate;
+        }
+        
+        .star:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            top: 20px;
+            left: 30px;
+            animation-delay: 0s;
+        }
+        
+        .star:nth-child(2) {
+            width: 15px;
+            height: 15px;
+            top: 50px;
+            right: 40px;
+            animation-delay: 0.5s;
+        }
+        
+        .star:nth-child(3) {
+            width: 25px;
+            height: 25px;
+            bottom: 30px;
+            left: 60px;
+            animation-delay: 1s;
+        }
+        
+        /* Cena de escolha de vestido */
+        .dress-rack {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .dress {
+            width: 60px;
+            height: 100px;
+            position: relative;
+            animation: swing 3s ease-in-out infinite;
+        }
+        
+        .dress-rosa {
+            background: linear-gradient(to bottom, #ff66b2, #ff3385);
+        }
+        
+        .dress-azul {
+            background: linear-gradient(to bottom, #66b3ff, #3385ff);
+        }
+        
+        .dress-dourado {
+            background: linear-gradient(to bottom, #ffcc66, #ffb833);
+        }
+        
+        .dress::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: #ffccff;
+            border-radius: 50%;
+        }
+        
+        /* Cena de escolha de transporte */
+        .transport-options {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        
+        .transport {
+            width: 100px;
+            height: 80px;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        .carro {
+            background: #ff66b2;
+            border-radius: 10px 20px 5px 5px;
+        }
+        
+        .carro::before {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+        }
+        
+        .carro::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+        }
+        
+        .cavalo {
+            background: #f5f5f5;
+            border-radius: 40% 40% 30% 30%;
+            position: relative;
+        }
+        
+        .cavalo::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            width: 30px;
+            height: 40px;
+            background: #f5f5f5;
+            border-radius: 50% 50% 40% 40%;
+        }
+        
+        .cavalo::after {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 35px;
+            width: 10px;
+            height: 15px;
+            background: #ffccff;
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+        
+        .limousine {
+            background: #ff66b2;
+            width: 150px;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .limousine::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 40px;
+            width: 70px;
+            height: 60px;
+            background: #ff99cc;
+            border-radius: 5px;
+        }
+        
+        .limousine::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 20px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+        }
+        
+        .limousine .wheel {
+            position: absolute;
+            bottom: -10px;
+            right: 20px;
+            width: 20px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+        }
+        
+        /* Cena de escolha de atividade */
+        .activity-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .activity {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+        
+        .danca {
+            background: radial-gradient(circle, #ff66b2, #ff3385);
+            border-radius: 50%;
+        }
+        
+        .danca::before, .danca::after {
+            content: "";
+            position: absolute;
+            background: #ffccff;
+            border-radius: 50%;
+        }
+        
+        .danca::before {
+            width: 30px;
+            height: 30px;
+            top: 10px;
+            left: 10px;
+        }
+        
+        .danca::after {
+            width: 20px;
+            height: 20px;
+            bottom: 15px;
+            right: 15px;
+        }
+        
+        .conversa {
+            background: #66b3ff;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .conversa::before, .conversa::after {
+            content: "";
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .conversa::before {
+            width: 20px;
+            height: 20px;
+            top: 20px;
+            left: 20px;
+        }
+        
+        .conversa::after {
+            width: 20px;
+            height: 20px;
+            bottom: 20px;
+            right: 20px;
+        }
+        
+        .fotos {
+            background: #ffcc66;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .fotos::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 50px;
+            height: 40px;
+            background: white;
+            border: 3px solid #ff66b2;
+            border-radius: 5px;
+        }
+        
+        .fotos::after {
+            content: "";
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 20px;
+            height: 20px;
+            background: #ff66b2;
+            border-radius: 50%;
+        }
+        
+        /* Cena final */
+        .final-animation {
+            width: 150px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .barbie-final {
+            width: 60px;
+            height: 120px;
+            background: linear-gradient(to bottom, #ff66b2, #ff3385);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 30px 30px 10px 10px;
+            animation: celebrate 2s ease-in-out infinite;
+        }
+        
+        .barbie-final::before {
+            content: "";
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #ffccff;
+            border-radius: 50%;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff66b2;
+            border-radius: 50%;
+            animation: fall 3s linear infinite;
+        }
+        
+        .confetti:nth-child(2) {
+            background: #66b3ff;
+            left: 20%;
+            animation-delay: 0.5s;
+        }
+        
+        .confetti:nth-child(3) {
+            background: #ffcc66;
+            left: 40%;
+            animation-delay: 1s;
+        }
+        
+        .confetti:nth-child(4) {
+            background: #66ff66;
+            left: 60%;
+            animation-delay: 1.5s;
+        }
+        
+        .confetti:nth-child(5) {
+            background: #ff66b2;
+            left: 80%;
+            animation-delay: 2s;
+        }
+        
+        /* Animações gerais */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes swing {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes celebrate {
+            0%, 100% { transform: translate(-50%, -50%) rotate(-5deg); }
+            50% { transform: translate(-50%, -50%) rotate(5deg); }
+        }
+        
+        @keyframes fall {
+            0% { top: -10px; opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .dress-rack, .transport-options, .activity-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -90,17 +594,29 @@
     <div class="container">
         <div id="intro" class="scene">
             <h1>Aventura da Barbie: Uma Jornada Mágica</h1>
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1620744759917-17390aa411d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Barbie em sua casa dos sonhos">
+            <div class="animation-container">
+                <div class="barbie-house">
+                    <div class="window"></div>
+                    <div class="window"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                </div>
             </div>
-            <p>Olá! Eu sou a Barbie e acabei de receber um convite muito especial para um evento glamourosa no Reino Encantado! Preciso da sua ajuda para me preparar para esta aventura mágica. Vamos começar?</p>
-            <button id="start-btn">Começar Aventura</button>
+            <p>Olá! Eu sou a Barbie e acabei de receber um convite muito especial para um evento glamouroso no Reino Encantado! Preciso da sua ajuda para me preparar para esta aventura mágica. Vamos começar?</p>
+            <div class="choices">
+                <button id="start-btn">Começar Aventura</button>
+            </div>
         </div>
         
         <div id="dress-choice" class="scene hidden">
             <h1>Escolha do Vestido</h1>
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Vestidos da Barbie">
+            <div class="animation-container">
+                <div class="dress-rack">
+                    <div class="dress dress-rosa" data-choice="rosa"></div>
+                    <div class="dress dress-azul" data-choice="azul"></div>
+                    <div class="dress dress-dourado" data-choice="dourado"></div>
+                </div>
             </div>
             <p>Primeiro, preciso escolher um vestido para o evento. Qual devo usar?</p>
             <div class="choices">
@@ -112,8 +628,14 @@
         
         <div id="transport-choice" class="scene hidden">
             <h1>Meio de Transporte</h1>
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1633388420094-287a95737c26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Opções de transporte da Barbie">
+            <div class="animation-container">
+                <div class="transport-options">
+                    <div class="transport carro" data-choice="carro"></div>
+                    <div class="transport cavalo" data-choice="cavalo"></div>
+                    <div class="transport limousine" data-choice="limousine">
+                        <div class="wheel"></div>
+                    </div>
+                </div>
             </div>
             <p>Agora preciso decidir como chegar ao Reino Encantado. Qual é a melhor opção?</p>
             <div class="choices">
@@ -125,8 +647,12 @@
         
         <div id="activity-choice" class="scene hidden">
             <h1>Atividade no Evento</h1>
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Evento da Barbie">
+            <div class="animation-container">
+                <div class="activity-options">
+                    <div class="activity danca" data-choice="danca"></div>
+                    <div class="activity conversa" data-choice="conversa"></div>
+                    <div class="activity fotos" data-choice="fotos"></div>
+                </div>
             </div>
             <p>Cheguei ao evento! É lindo e glamouroso. O que devo fazer primeiro?</p>
             <div class="choices">
@@ -138,9 +664,20 @@
         
         <div id="final" class="scene hidden">
             <h1>Resultado da Aventura</h1>
-            <div id="final-image" class="image-container"></div>
+            <div class="animation-container">
+                <div class="final-animation">
+                    <div class="barbie-final"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                </div>
+            </div>
             <p id="final-text"></p>
-            <button class="restart-btn" id="restart-btn">Jogar Novamente</button>
+            <div class="choices">
+                <button class="restart-btn" id="restart-btn">Jogar Novamente</button>
+            </div>
         </div>
     </div>
 
@@ -160,7 +697,6 @@
         
         // Elementos do resultado final
         const finalText = document.getElementById('final-text');
-        const finalImage = document.getElementById('final-image');
         
         // Variáveis para armazenar as escolhas
         let choices = {
@@ -215,26 +751,20 @@
         // Função para determinar e mostrar o resultado final
         function showFinalResult() {
             let resultText = '';
-            let imageUrl = '';
             
             // Lógica para determinar o resultado baseado nas escolhas
             if (choices.dress === 'rosa' && choices.transport === 'carro' && choices.activity === 'danca') {
                 resultText = 'Com seu vestido rosa brilhante, você chegou no carro conversível e foi direto para a pista de dança! Todos ficaram encantados com seu estilo e você foi eleita a rainha do baile! Parabéns, foi uma noite perfeita!';
-                imageUrl = 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80';
             } else if (choices.dress === 'azul' && choices.transport === 'cavalo' && choices.activity === 'conversa') {
                 resultText = 'Chegando no cavalo branco mágico com seu lindo vestido azul princesa, você decidiu conversar com as outras convidadas. Foi uma ótima escolha! Você fez novas amizades e descobriu que a princesa do reino está procurando uma embaixadora da moda - e você foi escolhida!';
-                imageUrl = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80';
             } else if (choices.dress === 'dourado' && choices.transport === 'limousine' && choices.activity === 'fotos') {
                 resultText = 'Sua chegada de limousine com o vestido dourado elegante foi espetacular! Ao tirar fotos no jardim encantado, você foi notada por um famoso fotógrafo de moda que te convidou para estrelar sua próxima campanha! Sua carreira como modelo está apenas começando!';
-                imageUrl = 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80';
             } else {
                 resultText = 'Sua combinação única de escolhas criou uma aventura especial! Você se divertiu muito no evento, fez novos amigos e criou memórias inesquecíveis. Cada escolha que você fez mostrou sua personalidade única e criatividade - o que é verdadeiramente mágico!';
-                imageUrl = 'https://images.unsplash.com/photo-1531747056595-07f6cbbe10ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80';
             }
             
-            // Atualizar o texto e imagem do resultado final
+            // Atualizar o texto do resultado final
             finalText.textContent = resultText;
-            finalImage.innerHTML = `<img src="${imageUrl}" alt="Resultado da aventura da Barbie">`;
             
             // Mostrar a cena final
             showScene(scenes.final);
@@ -242,3 +772,4 @@
     </script>
 </body>
 </html>
+
