@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbie: Aventura Rápida</title>
+    <style>
+        /* CSS Mínimo e embutido */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F8BBD0; /* Rosa Bebê */
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #FF007F; /* Rosa Choque */
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #FF007F;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ff3399;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>✨ O Que Fazer Hoje, Barbie? ✨</h1>
+        <div id="historia"></div>
+        <div id="opcoes"></div>
+    </div>
+
+    <script>
+        // Lógica JavaScript Mínima
+        const aventuraSimples = {
+            "0": {
+                historia: "O dia está lindo em Malibu! Você vai para a praia ou resolve um problema na cidade?",
+                opcoes: {
+                    "A": { texto: "Relaxar na praia e surfar.", proximoNivel: "1A" },
+                    "B": { texto: "Ir ao centro consertar um vazamento.", proximoNivel: "1B" }
+                }
+            },
+            "1A": {
+                historia: "A praia foi incrível! Você surfou uma onda perfeita. Agora, você come um sorvete ou tira uma selfie com o golfinho?",
+                opcoes: {
+                    "A": { texto: "Sorvete gigante de morango.", proximoNivel: "Final_A" },
+                    "B": { texto: "Selfie com o golfinho sorridente.", proximoNivel: "Final_B" }
+                }
+            },
+            "1B": {
+                historia: "Você consertou o vazamento! O Prefeito te agradece. Você recebe um prêmio ou ganha uma nova ferramenta?",
+                opcoes: {
+                    "A": { texto: "O prêmio de Cidadã do Mês.", proximoNivel: "Final_C" },
+                    "B": { texto: "Uma chave inglesa rosa e brilhante.", proximoNivel: "Final_D" }
+                }
+            },
+            "Final_A": {
+                historia: "Final: O sorvete estava delicioso! É um dia perfeito. Você recarrega as energias para o próximo desafio.",
+                opcoes: { "Recomecar": { texto: "Recomeçar", proximoNivel: "0" } }
+            },
+            "Final_B": {
+                historia: "Final: A selfie ficou viral! Você usa sua fama para promover a limpeza das praias. Missão cumprida!",
+                opcoes: { "Recomecar": { texto: "Recomeçar", proximoNivel: "0" } }
+            },
+            "Final_C": {
+                historia: "Final: Você ganha uma festa e uma estátua! A cidade te ama. O glamour da heroína!",
+                opcoes: { "Recomecar": { texto: "Recomeçar", proximoNivel: "0" } }
+            },
+            "Final_D": {
+                historia: "Final: A chave inglesa rosa é sua nova ferramenta favorita. Você adora resolver problemas de um jeito estiloso!",
+                opcoes: { "Recomecar": { texto: "Recomeçar", proximoNivel: "0" } }
+            }
+        };
+
+        let nivelAtual = "0";
+        const divHistoria = document.getElementById('historia');
+        const divOpcoes = document.getElementById('opcoes');
+
+        function carregarNivel(nivel) {
+            const dados = aventuraSimples[nivel];
+            if (!dados) return;
+
+            divHistoria.innerHTML = `<p>${dados.historia}</p>`;
+            divOpcoes.innerHTML = '';
+
+            for (const chave in dados.opcoes) {
+                const opcao = dados.opcoes[chave];
+                const botao = document.createElement('button');
+                botao.textContent = opcao.texto;
+                
+                // Função de escolha para botões
+                botao.onclick = () => {
+                    if (opcao.proximoNivel) {
+                        carregarNivel(opcao.proximoNivel);
+                    }
+                };
+                
+                divOpcoes.appendChild(botao);
+            }
+            nivelAtual = nivel;
+        }
+
+        // Inicia o jogo
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarNivel(nivelAtual);
+        });
+    </script>
+</body>
+</html>
