@@ -3,126 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barbie: Aventura Rápida</title>
+    <title>Aventura da Barbie: Uma Jornada Mágica</title>
     <style>
-        /* CSS Mínimo e embutido */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #F8BBD0; /* Rosa Bebê */
+            font-family: 'Arial', sans-serif;
+            background-color: #ffcce6;
             color: #333;
-            text-align: center;
-            padding: 50px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
+        
         .container {
-            background-color: #FFFFFF;
+            background-color: white;
             border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
         }
+        
         h1 {
-            color: #FF007F; /* Rosa Choque */
+            color: #e91e63;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
             margin-bottom: 20px;
         }
+        
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
         button {
-            background-color: #FF007F;
+            background-color: #e91e63;
             color: white;
             border: none;
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 8px;
+            border-radius: 30px;
+            padding: 15px 25px;
+            font-size: 1.1rem;
             cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
+        
         button:hover {
-            background-color: #ff3399;
+            background-color: #c2185b;
+            transform: scale(1.05);
+        }
+        
+        .image-container {
+            margin: 20px 0;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .restart-btn {
+            background-color: #9c27b0;
+            margin-top: 20px;
+        }
+        
+        .restart-btn:hover {
+            background-color: #7b1fa2;
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h1>✨ O Que Fazer Hoje, Barbie? ✨</h1>
-        <div id="historia"></div>
-        <div id="opcoes"></div>
+        <div id="intro" class="scene">
+            <h1>Aventura da Barbie: Uma Jornada Mágica</h1>
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1620744759917-17390aa411d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Barbie em sua casa dos sonhos">
+            </div>
+            <p>Olá! Eu sou a Barbie e acabei de receber um convite muito especial para um evento glamourosa no Reino Encantado! Preciso da sua ajuda para me preparar para esta aventura mágica. Vamos começar?</p>
+            <button id="start-btn">Começar Aventura</button>
+        </div>
+        
+        <div id="dress-choice" class="scene hidden">
+            <h1>Escolha do Vestido</h1>
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Vestidos da Barbie">
+            </div>
+            <p>Primeiro, preciso escolher um vestido para o evento. Qual devo usar?</p>
+            <div class="choices">
+                <button data-choice="rosa">Vestido Rosa Brilhante</button>
+                <button data-choice="azul">Vestido Azul Princesa</button>
+                <button data-choice="dourado">Vestido Dourado Elegante</button>
+            </div>
+        </div>
+        
+        <div id="transport-choice" class="scene hidden">
+            <h1>Meio de Transporte</h1>
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1633388420094-287a95737c26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Opções de transporte da Barbie">
+            </div>
+            <p>Agora preciso decidir como chegar ao Reino Encantado. Qual é a melhor opção?</p>
+            <div class="choices">
+                <button data-choice="carro">Carro Conversível Rosa</button>
+                <button data-choice="cavalo">Cavalo Branco Mágico</button>
+                <button data-choice="limousine">Limousine Cor-de-Rosa</button>
+            </div>
+        </div>
+        
+        <div id="activity-choice" class="scene hidden">
+            <h1>Atividade no Evento</h1>
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Evento da Barbie">
+            </div>
+            <p>Cheguei ao evento! É lindo e glamouroso. O que devo fazer primeiro?</p>
+            <div class="choices">
+                <button data-choice="danca">Dançar na pista de dança</button>
+                <button data-choice="conversa">Conversar com as outras convidadas</button>
+                <button data-choice="fotos">Tirar fotos no jardim encantado</button>
+            </div>
+        </div>
+        
+        <div id="final" class="scene hidden">
+            <h1>Resultado da Aventura</h1>
+            <div id="final-image" class="image-container"></div>
+            <p id="final-text"></p>
+            <button class="restart-btn" id="restart-btn">Jogar Novamente</button>
+        </div>
     </div>
 
     <script>
-        // Lógica JavaScript Mínima
-        const aventuraSimples = {
-            "0": {
-                historia: "O dia está lindo em Malibu! Você vai para a praia ou resolve um problema na cidade?",
-                opcoes: {
-                    "A": { texto: "Relaxar na praia e surfar.", proximoNivel: "1A" },
-                    "B": { texto: "Ir ao centro consertar um vazamento.", proximoNivel: "1B" }
-                }
-            },
-            "1A": {
-                historia: "A praia foi incrível! Você surfou uma onda perfeita. Agora, você come um sorvete ou tira uma selfie com o golfinho?",
-                opcoes: {
-                    "A": { texto: "Sorvete gigante de morango.", proximoNivel: "Final_A" },
-                    "B": { texto: "Selfie com o golfinho sorridente.", proximoNivel: "Final_B" }
-                }
-            },
-            "1B": {
-                historia: "Você consertou o vazamento! O Prefeito te agradece. Você recebe um prêmio ou ganha uma nova ferramenta?",
-                opcoes: {
-                    "A": { texto: "O prêmio de Cidadã do Mês.", proximoNivel: "Final_C" },
-                    "B": { texto: "Uma chave inglesa rosa e brilhante.", proximoNivel: "Final_D" }
-                }
-            },
-            "Final_A": {
-                historia: "Final: O sorvete estava delicioso! É um dia perfeito. Você recarrega as energias para o próximo desafio.",
-                opcoes: { "Recomecar": { texto: "Recomeçar", proximoNivel: "0" } }
-            },
-            "Final_B": {
-                historia: "Final: A selfie ficou viral! Você usa sua fama para promover a limpeza das praias. Missão cumprida!",
-                opcoes: { "Recomecar": { texto: "Recomeçar", proximoNivel: "0" } }
-            },
-            "Final_C": {
-                historia: "Final: Você ganha uma festa e uma estátua! A cidade te ama. O glamour da heroína!",
-                opcoes: { "Recomecar": { texto: "Recomeçar", proximoNivel: "0" } }
-            },
-            "Final_D": {
-                historia: "Final: A chave inglesa rosa é sua nova ferramenta favorita. Você adora resolver problemas de um jeito estiloso!",
-                opcoes: { "Recomecar": { texto: "Recomeçar", proximoNivel: "0" } }
-            }
+        // Elementos da cena
+        const scenes = {
+            intro: document.getElementById('intro'),
+            dressChoice: document.getElementById('dress-choice'),
+            transportChoice: document.getElementById('transport-choice'),
+            activityChoice: document.getElementById('activity-choice'),
+            final: document.getElementById('final')
         };
-
-        let nivelAtual = "0";
-        const divHistoria = document.getElementById('historia');
-        const divOpcoes = document.getElementById('opcoes');
-
-        function carregarNivel(nivel) {
-            const dados = aventuraSimples[nivel];
-            if (!dados) return;
-
-            divHistoria.innerHTML = `<p>${dados.historia}</p>`;
-            divOpcoes.innerHTML = '';
-
-            for (const chave in dados.opcoes) {
-                const opcao = dados.opcoes[chave];
-                const botao = document.createElement('button');
-                botao.textContent = opcao.texto;
-                
-                // Função de escolha para botões
-                botao.onclick = () => {
-                    if (opcao.proximoNivel) {
-                        carregarNivel(opcao.proximoNivel);
-                    }
-                };
-                
-                divOpcoes.appendChild(botao);
-            }
-            nivelAtual = nivel;
-        }
-
-        // Inicia o jogo
-        document.addEventListener('DOMContentLoaded', () => {
-            carregarNivel(nivelAtual);
+        
+        // Botões
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        // Elementos do resultado final
+        const finalText = document.getElementById('final-text');
+        const finalImage = document.getElementById('final-image');
+        
+        // Variáveis para armazenar as escolhas
+        let choices = {
+            dress: '',
+            transport: '',
+            activity: ''
+        };
+        
+        // Event listeners
+        startBtn.addEventListener('click', () => {
+            showScene(scenes.dressChoice);
         });
+        
+        restartBtn.addEventListener('click', () => {
+            // Resetar escolhas
+            choices = {
+                dress: '',
+                transport: '',
+                activity: ''
+            };
+            showScene(scenes.intro);
+        });
+        
+        // Adicionar event listeners para todas as escolhas
+        document.querySelectorAll('button[data-choice]').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const choiceType = e.target.parentElement.parentElement.id;
+                const choiceValue = e.target.getAttribute('data-choice');
+                
+                // Armazenar a escolha
+                if (choiceType === 'dress-choice') {
+                    choices.dress = choiceValue;
+                    showScene(scenes.transportChoice);
+                } else if (choiceType === 'transport-choice') {
+                    choices.transport = choiceValue;
+                    showScene(scenes.activityChoice);
+                } else if (choiceType === 'activity-choice') {
+                    choices.activity = choiceValue;
+                    showFinalResult();
+                }
+            });
+        });
+        
+        // Função para mostrar uma cena específica
+        function showScene(scene) {
+            // Esconder todas as cenas
+            Object.values(scenes).forEach(s => s.classList.add('hidden'));
+            // Mostrar a cena desejada
+            scene.classList.remove('hidden');
+        }
+        
+        // Função para determinar e mostrar o resultado final
+        function showFinalResult() {
+            let resultText = '';
+            let imageUrl = '';
+            
+            // Lógica para determinar o resultado baseado nas escolhas
+            if (choices.dress === 'rosa' && choices.transport === 'carro' && choices.activity === 'danca') {
+                resultText = 'Com seu vestido rosa brilhante, você chegou no carro conversível e foi direto para a pista de dança! Todos ficaram encantados com seu estilo e você foi eleita a rainha do baile! Parabéns, foi uma noite perfeita!';
+                imageUrl = 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80';
+            } else if (choices.dress === 'azul' && choices.transport === 'cavalo' && choices.activity === 'conversa') {
+                resultText = 'Chegando no cavalo branco mágico com seu lindo vestido azul princesa, você decidiu conversar com as outras convidadas. Foi uma ótima escolha! Você fez novas amizades e descobriu que a princesa do reino está procurando uma embaixadora da moda - e você foi escolhida!';
+                imageUrl = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80';
+            } else if (choices.dress === 'dourado' && choices.transport === 'limousine' && choices.activity === 'fotos') {
+                resultText = 'Sua chegada de limousine com o vestido dourado elegante foi espetacular! Ao tirar fotos no jardim encantado, você foi notada por um famoso fotógrafo de moda que te convidou para estrelar sua próxima campanha! Sua carreira como modelo está apenas começando!';
+                imageUrl = 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80';
+            } else {
+                resultText = 'Sua combinação única de escolhas criou uma aventura especial! Você se divertiu muito no evento, fez novos amigos e criou memórias inesquecíveis. Cada escolha que você fez mostrou sua personalidade única e criatividade - o que é verdadeiramente mágico!';
+                imageUrl = 'https://images.unsplash.com/photo-1531747056595-07f6cbbe10ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80';
+            }
+            
+            // Atualizar o texto e imagem do resultado final
+            finalText.textContent = resultText;
+            finalImage.innerHTML = `<img src="${imageUrl}" alt="Resultado da aventura da Barbie">`;
+            
+            // Mostrar a cena final
+            showScene(scenes.final);
+        }
     </script>
 </body>
 </html>
